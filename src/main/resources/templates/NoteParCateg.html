@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes par Catégorie</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">Notes par Catégorie</h1>
+
+        <!-- Affichage des notes par catégorie -->
+        <div class="mt-4">
+            <div th:each="categorie : ${notesParCategorie}" >
+                <h2 th:text="${categorie.categorie}"></h2>
+            <div class="result-item">
+                <table class="table table-striped mb-4">
+                    <tbody>
+                        <!-- Affichage des matières pour chaque catégorie -->
+                        <tr th:each="matiere : ${categorie}">
+                            <td th:text="${matiere.ue}">UE</td>
+                            <td th:text="${matiere.intitule}">Intitulé</td>
+                            <td th:text="${matiere.note}">Note</td>
+                            <td th:text="${matiere.credits}">Crédits</td>
+                        </tr>
+                        <!-- Affichage de la moyenne pour la catégorie -->
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="result-summary">
+                        <h2>Résumé des Résultats</h2>
+                        <div th:each="moyenne : ${moyennesParCategorieMap}" >
+                            <div class="result-item">
+                                <span class="result-label">Moyenne </span>
+                                <span class="result-value" th:text="${moyenne.moyennePonderee}"></span>
+                            </div>
+                        </div>
+        </div>
+        
+
+        <div class="text-center mt-4">
+            <a href="/etudiants" class="btn btn-secondary">Retour à la liste des étudiants</a>
+        </div>
+    </div>
+</body>
+</html>

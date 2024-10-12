@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Statistiques des Étudiants</title>
+    <style>
+        .dashboard {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .stat {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .stat h2 {
+            margin: 40px 0 10px 0;
+            font-size: 1.5em;
+            position: relative;
+            padding-top: 40px; /* Espacement pour l'emoji au-dessus */
+        }
+        .emoji {
+            font-size: 3em;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .stat p {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Dashboard - Voler Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/Chart.min.css}">
+    <link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.svg}" type="image/x-icon">
+</head>
+<body>
+ <div id="app"><!--Main content-->
+    <span th:replace="fragments/sidebar :: sidebar"></span>
+    <div id="main"><!--Content id-->
+        <span th:replace="fragments/header :: header"></span>
+        <div class="main-content container-fluid">
+            <div class="dashboard">
+                <h1>Statistiques des Étudiants</h1>
+                <div class="stat button" onclick="location.href='/total-etudiants'">
+                    <span class="emoji">📊</span>
+                    <h2>Total des Étudiants</h2>
+                    <p th:text="${nombre_total_etudiants}"></p>
+                    <a href="#" class="btn icon icon-left btn-primary"><i data-feather="edit"></i> Primary</a>
+
+                </div>
+                <div class="stat button" onclick="th.href='/etudiants-admis'">
+                    <span class="emoji">✅</span>
+                    <h2>Étudiants Admis</h2>
+                    <p th:text="${nombre_etudiants_admis}"></p>
+                    <a href="#" class="btn icon icon-left btn-success"><i data-feather="check-circle"></i> Success</a>
+
+                </div>
+                <div class="stat button" onclick="location.href='/etudiants-ajournes'">
+                    <span class="emoji">❌</span>
+                    <h2>Étudiants Ajournés</h2>
+                    <p th:text="${nombre_etudiants_ajournes}"></p>
+                    <a href="#" class="btn icon icon-left btn-danger"><i data-feather="alert-circle"></i> Failure</a>
+
+                   
+                </div>
+            </div>
+        </div>               
+    </div>
+    
+    
+    
+ 
+    
+</div>
+    
+
+    <div class="text-center mt-4">
+                        <a href="/etudiants" class="btn btn-secondary">Retour à la liste des étudiants</a>
+                    </div>
+    <script th:src="@{/js/feather.min.js}"></script>
+    <script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+    <script th:src="@{/js/Chart.min.js}"></script>
+    <script th:src="@{/js/apexcharts.min.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

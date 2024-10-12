@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Relevé de Notes par Semestre</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Dashboard - Voler Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/Chart.min.css}">
+    <link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.svg}" type="image/x-icon">
+    <style>
+        .student-info, .result-summary {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .student-info h2, .result-summary h2 {
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.5em;
+            font-weight:bold;
+                        color: #1492E6; /* uleur verte personnalisée */
+
+            
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: #333;
+            margin-right: 10px; /* Espacement entre l'étiquette et la valeur */
+        }
+
+        .result-value {
+            color: #555;
+        }
+
+        .bg-admis {
+            
+            border: 2px solid green;
+        }
+
+        .bg-ajourne {
+           
+            border: 2px solid red;
+        }
+        
+        .text-green-bold {
+            color: #28a745; /* Couleur verte personnalisée */
+            font-weight:900; /* Gras */
+             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app"><!--Main content-->
+        <span th:replace="fragments2/sidebar :: sidebar"></span>
+        <div id="main"><!--Content id-->
+            <span th:replace="fragments2/header :: header"></span>
+            <div class="main-content container-fluid">
+    <div class="container my-4">
+                    <h1 class="text-center mb-4">Relevé de Notes pour l'Étudiant</h1>
+                    
+                    <div class="student-info text-success fw-bold">
+                        <h2><span th:text="${moyenne[0].etu}"></span></h2>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                           
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-bordered" id="releveTable">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>UE</th>
+                                        <th>Intitulé</th>
+                                        <th>Crédits Obtenus</th>
+                                        <th>Note</th>
+                                        <th>Résultat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="releveNote : ${releveNotes}">
+                                        <td th:text="${releveNote.ue}"></td>              
+                                        <td th:text="${releveNote.intitule}"></td>
+                                        <td th:text="${releveNote.creditObtenu}"></td>
+                                        <td th:text="${releveNote.note}"></td>
+                                        <td th:text="${releveNote.resultat}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+    <div class="result-summary">
+        <h2>Résumé des Résultats</h2>
+        <div th:each="m : ${moyenne}" class="result-item">
+            <div class="result-item">
+                <span class="result-label">Résultat: </span>
+                <span class="result-value resultat" th:text="${m.resultat}"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Crédits Obtenus: </span>
+                <span class="result-value" th:text="${m.total_credit_obtenu}"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Moyenne Générale: </span>
+                <span class="result-value" th:text="${m.moyenne_generale}"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Mention: </span>
+                <span class="result-value" th:text="${m.mention}"></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+                        <a href="/etudiants" class="btn btn-secondary">Retour à la liste des étudiants</a>
+                    </div>
+
+    <script th:src="@{/js/app.js}"></script>
+ </div> 
+</div>
+    
+</div>   
+<script th:src="@{/js/feather.min.js}"></script>
+    <script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+    <script th:src="@{/js/Chart.min.js}"></script>
+    <script th:src="@{/js/apexcharts.min.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var rows = document.querySelectorAll('#releveTable tbody tr');
+            rows.forEach(function(row) {
+                var resultat = row.cells[4].textContent.trim(); // Assuming "Résultat" is the fifth column
+                if (resultat === 'AJ') {
+                    row.classList.add('table-secondary');
+                } else if (resultat === 'P') {
+                    row.classList.add('table-warning');
+                } else if (resultat === 'B' || resultat === 'AB' || resultat === 'TB') {
+                    row.classList.add('table-success');
+                }
+            });
+        });
+    </script>
+    
+    <script th:src="@{/js/app.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultSummary = document.querySelector('.result-summary');
+            const studentInfo = document.querySelector('.student-info');
+            const resultItems = document.querySelectorAll('.result-value.resultat');
+            let isAdmis = true;
+
+            resultItems.forEach(item => {
+                if (item.innerText.trim() === 'AJOURNE(E)') {
+                    isAdmis = false;
+                }
+            });
+
+             if (isAdmis) {
+                resultSummary.classList.add('bg-admis');
+                studentInfo.classList.add('bg-admis');
+            } else {
+                resultSummary.classList.add('bg-ajourne');
+                studentInfo.classList.add('bg-ajourne');
+            }
+        });
+    </script>
+    
+    
+</body>
+</html>

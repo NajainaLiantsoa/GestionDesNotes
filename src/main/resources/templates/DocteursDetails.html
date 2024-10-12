@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <main id="main" class="main">
+            <table class="table">
+                
+                <thead>
+                <tr>
+                    
+                    <th scope="col">Docteur</th>
+                    <th scope="col">Patient</th>               
+                    <th scope="col">Date de visites</th>
+
+                    
+                </tr>
+                </thead>
+                
+                <tbody>
+                <!-- Utilisation de th:each pour parcourir la liste quote_client -->
+                <tr th:each="detail_doko : ${list_detail_doko}">
+                    <td th:text="${detail_doko.docteur}"></td>
+                    <td th:text="${detail_doko.patients}"></td>
+                    <td th:text="${detail_doko.date_de_visites}"></td>
+                </tr>
+                </tbody>
+                
+            </table>    
+        </main>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login_client.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <img src="/img/logo.png" alt="logo">
+                <h2>Home Renovation</h2>
+            </a>
+ 
+            <ul class="links">
+                <li><a href="/admin/dash">Dashboard admin</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Our achievements</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="background"></div>
+
+    <div class="container">
+        <div class="content">
+        </div>
+
+        <div class="logreg-box">
+            <div class="form-box login">
+                <form th:action="@{/etudiant/save_etu}" method="post">
+                    <h2>Login</h2>
+
+                    <div class="input-box">
+                        <span class="icon"><i class="bx bx-phone"></i></span>
+                        <input type="text" name="num_etu" required>
+                        <label>Numero ETU</label>
+                    </div>
+
+                    <button type="submit" class="btn">Sign in</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

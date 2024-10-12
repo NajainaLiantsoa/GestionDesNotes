@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Semestres par Année</title>
+</head>
+<body>
+    <h2>Résultats des semestres pour l'année <span th:text="${annee}"></span> - Étudiant ID: <span th:text="${etudiantId}"></span></h2>
+    
+    <!-- Table for Semestre 1 -->
+    <h3>Semestre 1</h3>
+    <table id="semestre1Table" border="1">
+        <thead>
+            <tr>
+                <th>UE</th>
+                <th>Intitule</th>
+                <th>Credit</th>
+                <th>Note</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="semestre : ${semestres}">
+                <td th:if="${semestre.nom_semestre == 'S1'}" th:text="${semestre.ue}"></td>
+                <td th:if="${semestre.nom_semestre == 'S1'}" th:text="${semestre.intitule}"></td>
+                <td th:if="${semestre.nom_semestre == 'S1'}" th:text="${semestre.credit}"></td>
+                <td th:if="${semestre.nom_semestre == 'S1'}" th:text="${semestre.note}"></td>
+                <td th:if="${semestre.nom_semestre == 'S1'}" th:text="${semestre.resultat}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Table for Semestre 2 -->
+    <h3>Semestre 2</h3>
+    <table id="semestre2Table" border="1">
+        <thead>
+            <tr>
+                <th>UE</th>
+                <th>Intitule</th>
+                <th>Credit</th>
+                <th>Note</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="semestre : ${semestres}">
+                <td th:if="${semestre.nom_semestre == 'S2'}" th:text="${semestre.ue}"></td>
+                <td th:if="${semestre.nom_semestre == 'S2'}" th:text="${semestre.intitule}"></td>
+                <td th:if="${semestre.nom_semestre == 'S2'}" th:text="${semestre.credit}"></td>
+                <td th:if="${semestre.nom_semestre == 'S2'}" th:text="${semestre.note}"></td>
+                <td th:if="${semestre.nom_semestre == 'S2'}" th:text="${semestre.resultat}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="result-summary">
+        <h2>Résumé des Résultats</h2>
+        <div th:each="m : ${moyenne}" class="result-item">
+            <div class="result-item">
+                <span class="result-label">sem </span>
+                <span class="result-value resultat" th:text="${m.semestre_nom}"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Crédits Obtenus: </span>
+                <span class="result-value" th:text="${m.moyenne_generale}"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Moyenne Générale: </span>
+                <span class="result-value" th:text="${m.total_credit_obtenu}"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Mention: </span>
+                <span class="result-value" th:text="${m.mention}"></span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Code JavaScript si nécessaire
+        });
+    </script>
+</body>
+</html>

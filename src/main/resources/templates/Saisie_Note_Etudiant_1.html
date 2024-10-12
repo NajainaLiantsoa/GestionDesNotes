@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Saisir Note</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+
+    <link rel="stylesheet" th:href="@{/css/Chart.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.svg}" type="image/x-icon">
+</head>
+<body>
+    
+    <div id="app"><!--Main content-->
+    <span th:replace="fragments/sidebar :: sidebar"></span>
+    <div id="main"><!--Content id-->
+        <span th:replace="fragments/header :: header"></span>
+        
+
+ <div class="main-content container-fluid"> 
+  <section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Saisie de Note Étudiant</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form action="#" th:action="@{/admin/saveNote}" th:object="${noteEtudiant}" method="post" class="form">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+    <div class="form-group">
+        <label for="etudiant">Étudiant:</label>
+        <input type="text" id="etudiant" th:field="*{etudiant.id}" class="form-control" list="etudiantList" placeholder="Saisir le numéro étudiant" oninput="updateStudentName()">
+        <datalist id="etudiantList">
+            <option th:each="etudiant : ${etudiants}"
+                th:value="${etudiant.id}"
+                th:text="${etudiant.numEtu} + ' - ' + ${etudiant.nom} + ' ' + ${etudiant.prenom}"
+                th:attr="data-nom= ${etudiant.numEtu} +' '+ ${etudiant.nom} + ' ' + ${etudiant.prenom}">
+            </option>
+        </datalist>
+        <small id="studentNameDisplay"></small>
+    </div>
+</div>
+
+<div class="col-md-6 col-12">
+    <div class="form-group">
+        <label for="matiere">Matière:</label>
+        <input type="text" id="matiere" th:field="*{matiere.id}" class="form-control" list="matiereList" placeholder="Saisir le code matière ou le nom" oninput="updateMatiereName()">
+        <datalist id="matiereList">
+            <option th:each="matiere : ${matieres}"
+                th:value="${matiere.id}"
+                th:text="${matiere.codeMatiere} + ' - ' + ${matiere.nom}"
+                th:attr="data-nom=${matiere.codeMatiere} +' '+${matiere.nom}">
+            </option>
+        </datalist>
+        <small id="matiereNameDisplay"></small>
+    </div>
+</div>
+
+                                
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="note">Note:</label>
+                                        <input type="number" id="note" th:field="*{note}" min="0" max="20" step="0.01" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <input type="submit" value="Enregistrer" class="btn btn-primary me-1 mb-1">
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>     
+
+            
+            
+            </div>
+        <span th:replace="fragments/footer :: footer"></span>
+    </div>
+</div>
+    <script th:src="@{/js/feather.min.js}"></script>
+<script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+
+<script th:src="@{/js/Chart.min.js}"></script>
+<script th:src="@{/js/apexcharts.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+
+<script th:src="@{/js/main.js}"></script>
+
+
+<script>
+        function updateStudentName() {
+            var etudiantInput = document.getElementById("etudiant");
+            var studentNameDisplay = document.getElementById("studentNameDisplay");
+            var datalist = document.getElementById("etudiantList");
+            
+            var option = Array.from(datalist.options).find(option => option.value === etudiantInput.value);
+            if (option) {
+                studentNameDisplay.textContent = option.getAttribute('data-nom');
+            } else {
+                studentNameDisplay.textContent = '';
+            }
+        }
+
+        function updateMatiereName() {
+            var matiereInput = document.getElementById("matiere");
+            var matiereNameDisplay = document.getElementById("matiereNameDisplay");
+            var datalist = document.getElementById("matiereList");
+            
+            var option = Array.from(datalist.options).find(option => option.value === matiereInput.value);
+            if (option) {
+                matiereNameDisplay.textContent = option.getAttribute('data-nom');
+            } else {
+                matiereNameDisplay.textContent = '';
+            }
+        }
+    </script>
+
+</body>
+</html>

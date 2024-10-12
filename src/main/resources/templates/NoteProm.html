@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insertion de Note</title>
+</head>
+<body>
+    <h1>Insertion de Note</h1>
+
+    <form action="/admin/insertNote" method="post">
+        <fieldset>
+            <label for="matiere">Matière:</label>
+            <select id="matiere" name="matiere" required>
+                <option value="">Sélectionner une matière</option>
+                <option th:each="matiere : ${matieres}" th:value="${matiere.id}" th:text="${matiere.nom}"></option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <label for="promotion">Promotion:</label>
+            <select id="promotion" name="promotion" required>
+                <option value="">Sélectionner une promotion</option>
+                <option th:each="promo : ${promotions}" th:value="${promo.id}" th:text="${promo.nom}"></option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <label for="note">Note:</label>
+            <input type="number" step="0.01" id="note" name="note" min="0" max="20" required>
+        </fieldset>
+
+        <button type="submit">Insérer la note</button>
+    </form>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+</body>
+</html>

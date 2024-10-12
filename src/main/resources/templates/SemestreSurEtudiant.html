@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Semestres de l'Étudiant</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<h1>Liste des Semestres de l'Étudiant</h1>
+
+<!-- Informations sur l'étudiant -->
+<div>
+
+</div>
+
+<h2>Liste des Semestres</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID Semestre</th>
+            <th>Nom Semestre</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="semestre : ${semestres}">
+            <td th:text="${semestre.etu}"></td>
+                <td th:text="${semestre.nomEtudiant}"></td>
+                <td th:text="${semestre.idSemestre}"></td>
+                <td th:text="${semestre.nomSemestre}"></td>
+                <td>
+                    <a th:href="@{/admin/releve-notes(etu=${semestre.etu}, semestre=${semestre.idSemestre})}">Voir Relevé</a>
+                </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Lien pour revenir à la page précédente ou à la liste des étudiants -->
+<a href="/etudiants">Retour à la liste des étudiants</a>
+
+</body>
+</html>

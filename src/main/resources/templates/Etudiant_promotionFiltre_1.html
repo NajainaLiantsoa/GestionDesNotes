@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Étudiants</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+
+    <link rel="stylesheet" th:href="@{/css/Chart.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/perfect-scrollbar.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.svg}" type="image/x-icon">
+</head>
+<body>
+<div id="app"><!--Main content-->
+    <span th:replace="fragments/sidebar :: sidebar"></span>
+    <div id="main"><!--Content id-->
+        <span th:replace="fragments/header :: header"></span>
+<div class="main-content container-fluid">
+
+<section class="bootstrap-select">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <h6>Rechercher Étudiant</h6>
+                                    <p>Utilisez les champs ci-dessous pour rechercher par nom ou par promotion.</p>
+                                    <form action="#" th:action="@{/admin/etudiantsFiltre}" method="get">
+                                        <fieldset class="form-group">
+                                            <label for="nom">Nom</label>
+                                            <input type="text" id="nom" name="nom" class="form-control" placeholder="Rechercher par nom" th:value="${param.nom}">
+                                        </fieldset>
+                                        <fieldset class="form-group">
+                                            <label for="promotion">Promotion</label>
+                                            <select id="promotion" name="promotion" class="form-select">
+                                              <option value="" th:text="'Sélectionner une promotion'"></option>
+                                              <option th:each="promo : ${promotions}"
+                                                      th:value="${promo.nom}"
+                                                      th:text="${promo.nom}">Promotion</option>
+                                            </select>
+                                        </fieldset>
+                                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="section">
+        <div class="card">
+            <div class="card-header">
+                Liste des Étudiants
+            </div>
+            <div class="card-body">
+                <table class='table table-striped' id="table1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Numéro d'Étudiant</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de Naissance</th>
+            <th>Promotion</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="etudiant : ${etudiants}">
+            <td >
+                <a th:href="@{/admin/NoteAnnuel(etudiant_id=${etudiant.etudiantId})}" th:text="${etudiant.etudiantId}"></a>
+            </td>
+            <td>
+                <a th:href="@{/admin/semestre/details(numEtu=${etudiant.numEtu})}" th:text="${etudiant.numEtu}"></a>
+            </td>
+            <td th:text="${etudiant.nom}"></td>
+            <td th:text="${etudiant.prenom}"></td>
+            <td th:text="${#dates.format(etudiant.dtn, 'dd/MM/yyyy')}"></td>
+            <td th:text="${etudiant.promotionNom}"></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+    
+    <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Authors table</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="etudiant : ${etudiants}">
+                      <td >
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm" th:text="${etudiant.nom} + ' ' + ${etudiant.prenom}">John Michael</h6>
+
+                            <p class="text-xs text-secondary mb-0" th:text="${etudiant.numEtu}">john@creative-tim.com</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">Manager</p>
+                        <p class="text-xs text-secondary mb-0">Organization</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success">Online</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold" th:text="${#dates.format(etudiant.dtn, 'dd/MM/yyyy')}">23/04/18</span>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          Edit
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <span th:replace="fragments/footer :: footer"></span>
+</div>
+</div>
+    <script th:src="@{/js/feather.min.js}"></script>
+<script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+
+<script th:src="@{/js/Chart.min.js}"></script>
+<script th:src="@{/js/apexcharts.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

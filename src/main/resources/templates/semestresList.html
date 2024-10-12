@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Semestres</title>
+</head>
+<body>
+    <h1>Liste des Semestres</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="semestre : ${semestres}">
+                <td><a th:href="@{/admin/semestre/{id}/resultats(id=${semestre.id})}" th:text="${semestre.id}"></a></td>
+                <td th:text="${semestre.nom}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
